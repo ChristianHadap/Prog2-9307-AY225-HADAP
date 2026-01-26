@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Authentication System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Admin Access Button -->
+        <div class="admin-access">
+            <button class="btn-admin-login" onclick="showAdminLogin()">Admin Access</button>
+        </div>
+
+        <!-- Admin Login Section -->
+        <div class="auth-section hidden" id="adminLoginSection">
+            <h2>Admin Login</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminPassword">Admin Password:</label>
+                    <input type="password" id="adminPassword" placeholder="Enter admin password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login as Admin</button>
+                <p class="toggle-text"><a href="#" onclick="hideAdminLogin()">Back</a></p>
+            </form>
+        </div>
+
+        <!-- Admin Dashboard Section -->
+        <div class="admin-dashboard hidden" id="adminDashboard">
+            <div class="admin-header">
+                <h2>Admin Dashboard</h2>
+                <button class="btn btn-logout" onclick="logoutAdmin()">Logout</button>
+            </div>
+
+            <div class="admin-stats">
+                <div class="stat-box">
+                    <h3 id="totalUsers">0</h3>
+                    <p>Total Users</p>
+                </div>
+                <div class="stat-box">
+                    <h3 id="totalSessions">0</h3>
+                    <p>Total Login Sessions</p>
+                </div>
+            </div>
+
+            <div class="admin-search">
+                <input type="text" id="userSearch" placeholder="Search by User ID, Username, Full Name, Digital Signature, or Attendance Signature/Time..." class="search-input">
+                <button onclick="searchUsers()" class="btn btn-primary" style="width: auto; padding: 10px 20px;">Search</button>
+                <button onclick="displayAllUsers()" class="btn" style="width: auto; padding: 10px 20px; background: #667eea; color: white; margin-left: 5px;">Show All Users</button>
+                <button onclick="exportAllAttendance()" class="btn btn-export" style="width: auto; padding: 10px 20px; margin-left: 5px;">Export All Attendance</button>
+            </div>
+
+            <div class="admin-users-list">
+                <h3>Registered Users</h3>
+                <div id="usersList" class="users-table"></div>
+            </div>
+        </div>
+
+        <!-- User Detail Modal -->
+        <div class="modal hidden" id="userDetailModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeUserDetail()">&times;</span>
+                <h2>User Details</h2>
+                <div id="userDetailContent"></div>
+            </div>
+        </div>
+
+        <!-- Sign Up Section -->
+        <div class="auth-section" id="signupSection">
+            <h2>Create New Account</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupUsername">Username (Nickname):</label>
+                    <input type="text" id="signupUsername" placeholder="e.g., personator" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupName">Full Name:</label>
+                    <input type="text" id="signupName" placeholder="e.g., Christian Jorge A Hadap" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password:</label>
+                    <input type="password" id="signupPassword" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+                <p class="toggle-text">Already have an account? <a href="#" onclick="toggleForms()">Sign In</a></p>
+            </form>
+        </div>
+
+        <!-- Sign In Section -->
+        <div class="auth-section hidden" id="signinSection">
+            <h2>User Sign In</h2>
+            <form id="signinForm">
+                <div class="form-group">
+                    <label for="signinUsername">Username:</label>
+                    <input type="text" id="signinUsername" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label for="signinPassword">Password:</label>
+                    <input type="password" id="signinPassword" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+                <p class="toggle-text">Don't have an account? <a href="#" onclick="toggleForms()">Sign Up</a></p>
+            </form>
+        </div>
+
+        <!-- Dashboard Section (shown after sign in) -->
+        <div class="dashboard hidden" id="dashboard">
+            <div class="dashboard-header">
+                <h2>Welcome, <span id="userName"></span>!</h2>
+                <button class="btn btn-logout" onclick="logout()">Logout</button>
+            </div>
+
+            <div class="user-info">
+                <h3>Your User Information</h3>
+                <div class="info-box">
+                    <p><strong>User ID:</strong> <span id="userId"></span></p>
+                    <p><strong>Username:</strong> <span id="displayUsername"></span></p>
+                    <p><strong>Full Name:</strong> <span id="displayName"></span></p>
+                    <p><strong>Account Created:</strong> <span id="createdDate"></span></p>
+                </div>
+            </div>
+
+            <div class="user-login-history">
+                <h3>Attendance Log</h3>
+                <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                    <button onclick="manualCheckIn()" class="btn btn-primary" style="width: auto; padding: 10px 20px;">Add Attendance Now</button>
+                </div>
+                <div id="loginHistory" class="history-list"></div>
+            </div>
+        </div>
+
+        <!-- Message Display -->
+        <div id="message" class="message"></div>
+    </div>
+
+    <script src="audio.js"></script>
+    <script src="lab activity.js"></script>
+</body>
+</html>
