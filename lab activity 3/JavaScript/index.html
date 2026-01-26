@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prelim Grade Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .input-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .input-section h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .form-group {
+            margin-bottom: 18px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #555;
+            font-weight: 500;
+            font-size: 13px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #333;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px;
+            background: #333333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        button:hover {
+            background: #555555;
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        .results-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .results-section.hidden {
+            display: none;
+        }
+        
+        .metric-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        .metric-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .metric-value.secondary {
+            font-size: 24px;
+        }
+        
+        .metric-subtext {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+        }
+        
+        .large-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid #333;
+        }
+        
+        .large-card.critical {
+            border-left-color: #e74c3c;
+        }
+        
+        .large-card.success {
+            border-left-color: #27ae60;
+        }
+        
+        .large-card h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .large-card p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .exam-scores {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .score-box {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .score-box-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .score-box-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .exam-scores {
+                grid-template-columns: 1fr;
+            }
+            
+            .metric-value {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Prelim Grade Calculator</h1>
+        <p>Determine your required Prelim Exam score</p>
+    </div>
+    
+    <div class="main-container">
+        <!-- Input Section -->
+        <div class="input-section">
+            <h2>Enter Your Grades</h2>
+            <form id="gradeForm">
+                <div class="form-group">
+                    <label for="absences">Number of Absences (0-4)</label>
+                    <input type="number" id="absences" min="0" max="4" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lw1">Lab Work 1 (0-100)</label>
+                    <input type="number" id="lw1" min="0" max="100" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lw2">Lab Work 2 (0-100)</label>
+                    <input type="number" id="lw2" min="0" max="100" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lw3">Lab Work 3 (0-100)</label>
+                    <input type="number" id="lw3" min="0" max="100" step="0.01" required>
+                </div>
+                
+                <div class="button-group">
+                    <button type="submit">Calculate</button>
+                    <button type="button" onclick="clearForm()" style="background: #999;">Clear</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Results Section -->
+        <div id="resultsContainer" class="results-section hidden">
+            <!-- Attendance Card -->
+            <div class="metric-card">
+                <div class="metric-label">Attendance Score</div>
+                <div class="metric-value" id="attendanceScore">0%</div>
+                <div class="metric-subtext" id="attendanceDetail"></div>
+            </div>
+            
+            <!-- Lab Work Card -->
+            <div class="metric-card">
+                <div class="metric-label">Lab Work Average</div>
+                <div class="metric-value" id="labWorkAverage">0</div>
+                <div class="metric-subtext" id="labWorkDetail"></div>
+            </div>
+            
+            <!-- Class Standing Card -->
+            <div class="metric-card">
+                <div class="metric-label">Class Standing</div>
+                <div class="metric-value" id="classStanding">0</div>
+                <div class="metric-subtext">40% Attendance + 60% Lab Avg</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Large Results Section -->
+    <div id="largeResultsContainer" class="hidden" style="margin-top: 40px; max-width: 1200px; margin-left: auto; margin-right: auto;">
+        <!-- Required Exam Scores -->
+        <div class="large-card">
+            <h3>Required Prelim Exam Scores</h3>
+            <div class="exam-scores">
+                <div class="score-box">
+                    <div class="score-box-label">To Pass (75)</div>
+                    <div class="score-box-value" id="passingScore">-</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-box-label">To Excel (100)</div>
+                    <div class="score-box-value" id="excellentScore">-</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Remarks -->
+        <div id="remarks" class="large-card"></div>
+    </div>
+    
+    <script>
+        document.getElementById('gradeForm').addEventListener('submit', calculateGrades);
+        
+        function clearForm() {
+            document.getElementById('gradeForm').reset();
+            hideResults();
+        }
+        
+        function hideResults() {
+            document.getElementById('resultsContainer').classList.add('hidden');
+            document.getElementById('largeResultsContainer').classList.add('hidden');
+        }
+        
+        function showResults() {
+            document.getElementById('resultsContainer').classList.remove('hidden');
+            document.getElementById('largeResultsContainer').classList.remove('hidden');
+        }
+        
+        function calculateGrades(e) {
+            e.preventDefault();
+            
+            const absences = parseFloat(document.getElementById('absences').value);
+            const lw1 = parseFloat(document.getElementById('lw1').value);
+            const lw2 = parseFloat(document.getElementById('lw2').value);
+            const lw3 = parseFloat(document.getElementById('lw3').value);
+            
+            if (isNaN(absences) || isNaN(lw1) || isNaN(lw2) || isNaN(lw3)) {
+                alert(' ERROR: Invalid input. Please enter valid numbers.');
+                return;
+            }
+            
+            if (absences < 0 || absences > 4) {
+                alert(' ERROR: Absences must be between 0 and 4.');
+                return;
+            }
+            
+            if (lw1 < 0 || lw1 > 100 || lw2 < 0 || lw2 > 100 || lw3 < 0 || lw3 > 100) {
+                alert(' ERROR: Lab Work grades must be between 0 and 100.');
+                return;
+            }
+            
+            if (absences >= 4) {
+                showFailureResult(absences);
+                return;
+            }
+            
+            const labWorkAverage = (lw1 + lw2 + lw3) / 3;
+            const attendanceScore = 100 - (absences * 10);
+            const classStanding = (0.40 * attendanceScore) + (0.60 * labWorkAverage);
+            const rawPassingScore = (75 - (0.30 * classStanding)) / 0.70;
+            const rawExcellentScore = (100 - (0.30 * classStanding)) / 0.70;
+            
+            updateMetrics(absences, lw1, lw2, lw3, labWorkAverage, attendanceScore, classStanding);
+            updateExamScores(rawPassingScore, rawExcellentScore);
+            updateRemarks(rawPassingScore, rawExcellentScore, classStanding);
+            
+            showResults();
+        }
+        
+        function updateMetrics(absences, lw1, lw2, lw3, labWorkAverage, attendanceScore, classStanding) {
+            document.getElementById('attendanceScore').textContent = attendanceScore.toFixed(0) + '%';
+            document.getElementById('attendanceDetail').textContent = `${absences} absences`;
+            
+            document.getElementById('labWorkAverage').textContent = labWorkAverage.toFixed(0);
+            document.getElementById('labWorkDetail').textContent = `(${lw1.toFixed(0)} + ${lw2.toFixed(0)} + ${lw3.toFixed(0)}) / 3 = ${labWorkAverage.toFixed(0)}`;
+            
+            document.getElementById('classStanding').textContent = classStanding.toFixed(0);
+        }
+        
+        function updateExamScores(rawPassingScore, rawExcellentScore) {
+            const passingText = rawPassingScore > 100 ? ' Not Possible' : 
+                               rawPassingScore < 0 ? 'Already Pass' : 
+                               rawPassingScore.toFixed(0);
+            
+            const excellentText = rawExcellentScore > 100 ? ' Not Possible' : 
+                                 rawExcellentScore < 0 ? 'Already Excel' : 
+                                 rawExcellentScore.toFixed(0);
+            
+            document.getElementById('passingScore').textContent = passingText;
+            document.getElementById('excellentScore').textContent = excellentText;
+        }
+        
+        function updateRemarks(rawPassingScore, rawExcellentScore, classStanding) {
+            const remarksDiv = document.getElementById('remarks');
+            let remarksHTML = '';
+            let remarksClass = 'large-card';
+            
+            if (rawPassingScore > 100) {
+                remarksClass += ' critical';
+                remarksHTML = `
+                    <h3> Critical Notice</h3>
+                    <p>Even with a perfect Prelim Exam score (100), you cannot achieve a passing grade of 75 with your current Class Standing of <strong>${classStanding.toFixed(0)}</strong>. Your Class Standing is too low.</p>
+                `;
+            } else if (rawPassingScore <= 0) {
+                remarksClass += ' success';
+                remarksHTML = `
+                    <h3>Excellent News!</h3>
+                    <p>You are already guaranteed to pass the Prelim period with your current Class Standing of <strong>${classStanding.toFixed(0)}</strong>!<br><br>`;
+                
+                if (rawExcellentScore <= 0) {
+                    remarksHTML += `You are also already guaranteed an Excellent grade (100)!`;
+                } else if (rawExcellentScore <= 100) {
+                    remarksHTML += `You can achieve an Excellent grade with a score of <strong>${rawExcellentScore.toFixed(0)}</strong> in the Prelim Exam.`;
+                }
+                remarksHTML += `</p>`;
+            } else {
+                remarksClass += ' success';
+                remarksHTML = `
+                    <h3>You Can Pass!</h3>
+                    <p>Based on your current Class Standing of <strong>${classStanding.toFixed(0)}</strong>, you can achieve a passing grade.<br><br>`;
+                
+                if (rawExcellentScore <= 0) {
+                    remarksHTML += `You are already guaranteed an Excellent grade (100)!`;
+                } else if (rawExcellentScore <= 100) {
+                    remarksHTML += `An excellent grade (100) is achievable with a score of <strong>${rawExcellentScore.toFixed(0)}</strong> in the Prelim Exam.`;
+                } else {
+                    remarksHTML += `To achieve an Excellent grade (100), you would need more than 100 in the Prelim Exam, which is not possible.`;
+                }
+                remarksHTML += `</p>`;
+            }
+            
+            remarksDiv.className = remarksClass;
+            remarksDiv.innerHTML = remarksHTML;
+        }
+        
+        function showFailureResult(absences) {
+            document.getElementById('resultsContainer').classList.add('hidden');
+            const remarksDiv = document.getElementById('remarks');
+            remarksDiv.className = 'large-card critical';
+            remarksDiv.innerHTML = `
+                <h3> Automatic Failure</h3>
+                <p>You have <strong>${absences} absences</strong>. With 4 or more absences, you automatically fail the Prelim period.</p>
+            `;
+            document.getElementById('largeResultsContainer').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
+
