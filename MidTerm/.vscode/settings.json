@@ -1,0 +1,12 @@
+{
+    "java.project.sourcePaths": ["java"],
+    "java.project.outputPath": "java",
+    "java.project.referencedLibraries": [],
+    "[java]": {
+        "editor.defaultFormatter": "redhat.java",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    }
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Export Analytics Report - Web Version</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 CSV Export Analytics Report</h1>
+            <p>Web Version - Upload and Analyze Your CSV Files</p>
+        </header>
+
+        <nav class="navbar">
+            <a href="#" class="nav-link active">Home</a>
+            <a href="#help" class="nav-link">Help</a>
+            <a href="https://www.oracle.com/java/technologies/downloads/" target="_blank" class="nav-link download-btn">Download Java</a>
+        </nav>
+
+        <main>
+            <!-- Step 1: Upload File -->
+            <section class="card">
+                <h2>📁 Step 1: Upload CSV File</h2>
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" accept=".csv" style="display: none;">
+                    <p>Click to select a CSV file or drag and drop</p>
+                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                        Browse Files
+                    </button>
+                </div>
+                <div id="fileInfo" style="display: none; margin-top: 15px;">
+                    <p><strong>Selected File:</strong> <span id="fileName"></span></p>
+                </div>
+            </section>
+
+            <!-- Step 2: Process Button -->
+            <section class="card">
+                <h2>⚙️ Step 2: Process & Analyze</h2>
+                <button class="btn btn-success" id="processBtn" onclick="processFile()" disabled>
+                    Process & Analyze
+                </button>
+                <div id="status" style="margin-top: 10px; display: none;">
+                    <p id="statusText"></p>
+                </div>
+            </section>
+
+            <!-- Step 3: Results -->
+            <section class="card">
+                <h2>📈 Step 3: Analytics Results</h2>
+                <div id="resultsContainer" style="display: none;">
+                    <div id="results" class="results-area"></div>
+                    <button class="btn btn-info" onclick="exportResults()">
+                        Export to CSV
+                    </button>
+                </div>
+                <p id="resultsPlaceholder">Upload a CSV file and click "Process & Analyze" to see results here.</p>
+            </section>
+
+            <!-- Help Section -->
+            <section class="card" id="help">
+                <h2>❓ Help & Information</h2>
+                <div class="help-content">
+                    <h3>How to Use</h3>
+                    <ol>
+                        <li>Click "Browse Files" to select a CSV file</li>
+                        <li>Click "Process & Analyze" to analyze the data</li>
+                        <li>View the results and statistics</li>
+                        <li>Click "Export to CSV" to download a report</li>
+                    </ol>
+
+                    <h3>Required Format</h3>
+                    <p>Your CSV file should contain the following columns:</p>
+                    <ul>
+                        <li>img, title, console, genre, publisher, developer</li>
+                        <li>criticScore, totalSales, naSales, jpSales, palSales, otherSales</li>
+                        <li>releaseDate, lastUpdate</li>
+                    </ul>
+
+                    <h3>Need Java?</h3>
+                    <p><a href="https://www.oracle.com/java/technologies/downloads/" target="_blank">Download Java JDK</a></p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 CSV Analytics Report | Web Version</p>
+        </footer>
+    </div>
+
+    <script src="web-analytics.js"></script>
+</body>
+</html>

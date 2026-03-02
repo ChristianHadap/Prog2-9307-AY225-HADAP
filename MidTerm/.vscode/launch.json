@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch CSV Analytics (Java GUI)",
+            "type": "java",
+            "name": "CSV Analytics Report",
+            "request": "launch",
+            "mainClass": "CSVExportAnalyticsReport",
+            "projectName": "MidTerm",
+            "cwd": "${workspaceFolder}/java",
+            "preLaunchTask": "build-java"
+        }
+    ]
+}

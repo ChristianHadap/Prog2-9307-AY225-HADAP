@@ -1,0 +1,12 @@
+{
+  "name": "csv-export-analytics-report",
+  "version": "1.0.0",
+  "description": "CSV Export Analytics Report - Generate analytics summary from CSV datasets",
+  "main": "analytics.js",
+  "scripts": {
+    "start": "node analytics.js"
+  },
+  "keywords": ["csv", "analytics", "report", "export"],
+  "author": "",
+  "license": "MIT"
+}
