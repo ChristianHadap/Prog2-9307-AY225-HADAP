@@ -1,9 +1,9 @@
-# 🚀 How to Run the CSV Export Analytics Report
+# 🚀 How to Run CSV Export Analytics (Activity 1)
 
 ## EASIEST WAY (Just Double-Click!)
 
 ### On Windows:
-1. **Open the MidTerm folder**
+1. **Open the Activity 1 folder**
 2. **Double-click `RUN_APP.bat`** 
 3. The application will:
    - Check if Java is installed
@@ -29,9 +29,9 @@ If the batch file doesn't work, try:
 Use the provided shell script or run in terminal:
 
 ```bash
-cd MidTerm/java
-javac DataRecord.java CSVExportAnalyticsReport.java
-java CSVExportAnalyticsReport
+cd activity\ 1
+javac CSVExportAnalytics.java
+java CSVExportAnalytics
 ```
 
 ---

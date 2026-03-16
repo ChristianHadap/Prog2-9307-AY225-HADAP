@@ -1,11 +1,10 @@
 #!/bin/bash
-# CSV Export Analytics Report - PowerShell Launcher
+# CSV Export Analytics - Activity 1 Launcher
 # For Windows PowerShell users
 
-cd java
 echo ""
 echo "==========================================="
-echo "CSV Export Analytics Report"
+echo "CSV Export Analytics - Activity 1"
 echo "==========================================="
 echo ""
 
@@ -20,7 +19,7 @@ if ($LASTEXITCODE -ne 0) {
 
 # Compile the Java files
 echo "Compiling application..."
-javac DataRecord.java CSVExportAnalyticsReport.java 2>$null
+javac CSVExportAnalytics.java 2>$null
 if ($LASTEXITCODE -ne 0) {
     echo "ERROR: Compilation failed"
     echo "Please check your Java installation"
@@ -31,6 +30,6 @@ if ($LASTEXITCODE -ne 0) {
 # Run the application
 echo "Starting application..."
 echo ""
-java CSVExportAnalyticsReport
+java CSVExportAnalytics
 
 Read-Host "Press Enter to exit"

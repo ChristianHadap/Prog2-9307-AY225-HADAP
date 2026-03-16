@@ -95,4 +95,14 @@ public class CSVExportAnalytics extends JFrame {
             writer.close();
             
             reportArea.append("\n✓ Summary report exported to: summary_report.csv\n");
-            JOptionPane.showMessageDialog(this, "✓ Summary report exported successfully!");  
+            JOptionPane.showMessageDialog(this, "✓ Summary report exported successfully!");
+            
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "✗ Error exporting file: " + ex.getMessage());
+        }
+    }
+    
+    public static void main(String[] args) {
+        new CSVExportAnalytics();
+    }
+}

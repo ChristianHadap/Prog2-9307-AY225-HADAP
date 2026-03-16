@@ -1,22 +1,20 @@
 @echo off
-REM CSV Export Analytics Report - Windows Batch Launcher
-title CSV Export Analytics Report
+REM CSV Export Analytics - Activity 1 Launcher
+title CSV Export Analytics - Activity 1
 color 0A
 
 setlocal enabledelayedexpansion
 
-REM Get the directory where this batch file is located
+REM Get the directory where this batch file is located (Activity 1)
 set "SCRIPT_DIR=%~dp0"
-set "JAVA_DIR=%SCRIPT_DIR%java"
 
-cd /d "%JAVA_DIR%"
+cd /d "%SCRIPT_DIR%"
 
 if errorlevel 1 (
     echo.
     echo ============================================
-    echo ERROR: Could not find java folder
+    echo ERROR: Could not access current directory
     echo ============================================
-    echo Path tried: %JAVA_DIR%
     echo.
     pause
     exit /b 1
@@ -24,7 +22,7 @@ if errorlevel 1 (
 
 echo.
 echo ============================================
-echo CSV Export Analytics Report
+echo CSV Export Analytics - Activity 1
 echo ============================================
 echo.
 
@@ -58,14 +56,8 @@ echo Java found! Proceeding...
 echo.
 
 REM Check if source files exist
-if not exist "DataRecord.java" (
-    echo ERROR: DataRecord.java not found!
-    pause
-    exit /b 1
-)
-
-if not exist "CSVExportAnalyticsReport.java" (
-    echo ERROR: CSVExportAnalyticsReport.java not found!
+if not exist "CSVExportAnalytics.java" (
+    echo ERROR: CSVExportAnalytics.java not found!
     pause
     exit /b 1
 )
@@ -73,7 +65,7 @@ if not exist "CSVExportAnalyticsReport.java" (
 REM Compile the Java files
 echo Compiling application...
 echo.
-javac DataRecord.java CSVExportAnalyticsReport.java
+javac CSVExportAnalytics.java
 if errorlevel 1 (
     echo.
     echo ============================================
@@ -95,7 +87,7 @@ echo ============================================
 echo.
 
 REM Run the application
-java CSVExportAnalyticsReport
+java CSVExportAnalytics
 
 echo.
 echo Application closed.
