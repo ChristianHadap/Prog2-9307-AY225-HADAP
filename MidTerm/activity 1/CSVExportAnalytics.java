@@ -76,7 +76,7 @@ public class CSVExportAnalytics extends JFrame {
         }
         
         try {
-            String outputPath = "c:\\Users\\Administrator\\Desktop\\HADAP\\Prog2-9307-AY225-HADAP\\MidTerm\\summary_report.csv";
+            String outputPath = System.getProperty("user.home") + File.separator + "Downloads" + File.separator + "summary_report.csv";
             FileWriter writer = new FileWriter(outputPath);
             
             writer.append("Game Title,Console,Genre,Publisher,Total Sales\n");
@@ -94,4 +94,5 @@ public class CSVExportAnalytics extends JFrame {
             writer.flush();
             writer.close();
             
-            reportArea.append("\n✓ Summary report exported to: summary
+            reportArea.append("\n✓ Summary report exported to: summary_report.csv\n");
+            JOptionPane.showMessageDialog(this, "✓ Summary report exported successfully!");  
